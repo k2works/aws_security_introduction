@@ -8,7 +8,8 @@ AWS(Amazon Web Servie)のセキュリティに関するベストプラクティ�
 | ソフトウェア   | バージョン   | 備考        |
 |:---------------|:-------------|:------------|
 | OS X           |10.9.2        |             |
-| python         |2.7.5        |             |
+| python         |2.7.5         |             |
+| aws-cli        |1.3.10        |             |
 
 # 構成
 + [AWSセキュリティ認証(AWS Security Credentials)](#1)
@@ -176,84 +177,86 @@ AWS(Amazon Web Servie)のセキュリティに関するベストプラクティ�
 
 >AWSコマンドラインインターフェースはAWSサービスを管理する統合ツールです。たったひとつのツールをダウンロードして設定するだけで複数のAWSサービスをコマンドラインとスクリプトから自動化できるようになります。
 
-### コマンラインインターフェース利用開始
+### コマンドラインインターフェース利用開始
 #### 登録
-1. To sign up for an AWS account
-1. To get your access key ID and secret access key
-  1. Go to the IAM console.
-  1. From the navigation menu, click Users.
-  1. Select your IAM user name.
-  1. Click User Actions, and then click Manage Access Keys.
-  1. Click Create Access Key.
-  1. Your keys will look something like this:
-  1. Click Download Credentials, and store the keys in a secure location.
+1. AWSアカウントを登録する
+1. アクセスキーとシークレットアクセスキーを取得する
+  1. IAMコンソールに移動
+  1. ナビゲーションメニューのUsersを選択
+  1. 自分のIAMユーザー名を選択
+  1. User ActionsをクリックしてMnage Access Keysをクリックする
+  1. Create Access Keyをクリックする
+  1. キーが表示される
+  1. Download Credentialsをクリックして安全な場所に保存する
 
-#### Install the AWS CLI Using the MSI Installer (Windows)
-1. Download the appropriate MSI installer.
+#### AWS CLIインストール(Windows)
+1. ええやつをダウンロードする
 
   [Download the AWS CLI MSI installer for Windows (64-bit)](https://s3.amazonaws.com/aws-cli/AWSCLI64.msi)  
   [Download the AWS CLI MSI installer for Windows (32-bit)](https://s3.amazonaws.com/aws-cli/AWSCLI32.msi)
 
-1. Run the downloaded MSI installer.
-1. Follow the instructions that appear.
+1. 実行する
+1. ええようにしてくれるので従う
 
-#### Install the AWS CLI Using the Bundled Installer (Linux, OS X, or Unix)
-##### Prerequisites
+#### Bundled Installerを使ったAWS CLIインストール (Linux, OS X, or Unix)
+##### 前提
   + Linux, OS X, or Unix
   + Python 2.6.3 or later
 
-##### Install Python
-1. [Download the Python package](http://python.org/download/) for your operating system.
-1. Install Python.
-1. Verify the Python installation by typing the following at a command prompt:
+##### パイソンインストール
+1. [ダウンロードパイソン](http://python.org/download/)
+1. インストールパイソン
+1. 以下のコマンドを実行してパイソンがインストールされたか確認  
   ```python --help```
 
-##### Install the AWS CLI Using the Bundled Installer
-1. Download the [AWS CLI Bundled Installer](https://s3.amazonaws.com/aws-cli/awscli-bundle.zip).
-1. Unzip the package.
-1. Run the install command.
+##### Bundled Installerを使ったAWS CLIインストール
+1. [AWS CLI Bundled Installer](https://s3.amazonaws.com/aws-cli/awscli-bundle.zip)をダウンロード
+1. 解凍する
+1. インストールコマンドを実行する
 
-#### Install the AWS CLI Using pip (Windows, Linux, OS X, or Unix)
-##### Prerequisites
+#### pipを使ったAWS CLIインストール (Windows, Linux, OS X, or Unix)
+##### 前提
   + Windows, Linux, OS X, or Unix
   + Python 2.6.3 or later
   + pip
-##### Install Python
-1. [Download the Python package](http://python.org/download/) for your operating system.
-1. Install Python.
-1. Verify the Python installation by typing the following at a command prompt:
+
+##### パイソンインストール
+1. [ダウンロードパイソン](http://python.org/download/)
+1. インストールパイソン
+1. 以下のコマンドを実行してパイソンがインストールされたか確認  
   ```python --help```
 
-##### Install pip
-1. You can install pip in three ways: easy_install, apt-get/yum (on Linux only), or manual setup.
+##### pipインストール
+1. 次の３つの手段でpipをインストールできる: easy_install, apt-get/yum (on Linux only), またはマニュアルセットアップ
 
-  a. If you have easy_install (check by running easy_install --help), type the following at a command prompt to set up pip.  
+  a. easy_install (easy_install --helpが動くか確認)  
   ```sudo easy_install pip```
 
-  b. If you are on Linux, you can use apt-get or yum to install pip.
+  b. Linuxならapt-get または yum でインストールできる
 
-  On Debian or Ubuntu:  
+  Debian または Ubuntu:  
   ```$ sudo apt-get install python-pip```  
-  On Amazon Linux or Fedora:  
+  Amazon Linux またｈ Fedora:  
   ```$ sudo yum install python-pip```
 
-  c. To install pip manually, you need to download two files: [setuptools(ez_setup.py)](https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py) and [pip(get-pip.py)](https://raw.github.com/pypa/pip/master/contrib/get-pip.py). Then, run the following two commands.  
+  c. pipマニュアルインストールは[setuptools(ez_setup.py)](https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py) と [pip(get-pip.py)](https://raw.github.com/pypa/pip/master/contrib/get-pip.py)をダウンロードして以下のコマンドを実行する  
   ```python ez_setup.py```  
   ```python get-pip.py  ```
 
-1. Verify your pip installation by typing the following at your command prompt:  
+1. 以下のコマンドを実行してpipがインストールされているか確認する  
   ```pip --help```
 
-##### Install the AWS CLI Using pip
+##### pipを使ったAWS CLIインストール
+インストール  
 ```sudo pip install awscli```  
-To upgrade, simply use the --upgrade option.  
+アップグレード  
 ```sudo pip install --upgrade awscli```
 
-#### Test the AWS CLI Installation
+#### AWS CLIがインストールされたか確認
 ```aws help```
 
-### Configuring the AWS Command Line Interface
-#### Quick Start Configuration
+### AWSコマンドラインインターフェースの設定
+#### クイックスタート
 ```bash
 $aws configure
 AWS Access Key ID [None]: アクセスキーID
@@ -267,113 +270,122 @@ _~/.bashrc_
 export AWS_DEFAULT_REGION=ap-northeast-1
 export AWS_ACCESS_KEY_ID=アクセスキーID
 export AWS_SECRET_ACCESS_KEY=シークレットアクセスキー
-export AWS_SECURITY_TOKEN=
-export AWS_DEFAULT_PROFILE=
-export AWS_DEFAULT_OUTPUT=
-export AWS_CONFIG_FILE=~/.aws/config
 ```
-#### Configuration Settings and Precedence
-1. Command line
-1. Environment variable
-1. Configuration file
+#### 設定方法と優先順位
+1. コマンドライン
+1. 環境変数
+1. 設定ファイル
 
 ##### AWS Region
 
-Sets the AWS region to use. You can set the AWS region in the following ways:
+以下の方法で利用するAWSリージョンの値を設定する
 
-+ Set region in the configuration file.
-+ Set the AWS_DEFAULT_REGION environment variable.
-+ Set --region on the command line.
++ 設定ファイルのregion
++ 環境変数のAWS_DEFAULT_REGION
++ コマンドラインオプション --region
 
-This setting is required; there is no default value. For more information, see Configuring the AWS Region.
+必須項目：デフォルト値はない
 
 ##### AWS Access Key
-Sets the value of the AWS access key. You can set this value in the following ways:
 
-+ Set aws_access_key_id in the configuration file.
-+ Set the AWS_ACCESS_KEY_ID environment variable.
+以下の方法で利用するAWSアクセスキーの値を設定する
 
-This setting is required; there is no default value. For more information, see AWS Credentials.
++ 設定ファイルのaws_access_key_id
++ 環境変数のAWS_ACCESS_KEY_ID
+
+必須項目：デフォルト値はない
 
 ##### AWS Secret Access Key
-Sets the value of the AWS secret access key. You can set this value in the following ways:
 
-+ Set aws_secret_access_key in the configuration file.
-+ Set the AWS_SECRET_ACCESS_KEY environment variable.
+以下の方法で利用するAWSシークレットアクセスキーの値を設定する
 
-This setting is required; there is no default value. For more information, see AWS Credentials.
++ 設定ファイルのaws_secret_access_key
++ 環境変数のAWS_SECRET_ACCESS_KEY
+
+必須項目：デフォルト値はない
 
 ##### AWS Token
-Sets the value of the AWS token, which provides temporary credentials. You can set this value in the following ways:
 
-+ Set aws_security_token in the configuration file.
-+ Set the AWS_SECURITY_TOKEN environment variable.
+以下の方法で利用するAWSトークンの値を設定する
 
-This setting is required if you are using a security token for access; there is no default value. For more information, see AWS Credentials.
++ 設定ファイルのaws_security_token in the configuration file.
++ 環境変数のAWS_SECURITY_TOKEN
+
+任意項目：デフォルト値はない
 
 ##### AWS Config Location
-Sets the location of the AWS configuration file. You can set this location using the AWS_CONFIG_FILE environment variable.
 
-If you don't set the location, the AWS CLI uses the default location, which is ~/.aws/config on Linux, OS X, or Unix, and C:\Users\USERNAME\.aws\config on Windows. For more information, see Configuration File Location.
+環境変数AWS_CONFIG_FILEを使って設定ファイルの場所を指定できる
+
+設定ファイルの場所を指定しない場合のデフォルトは  
+Linux,OS X,Unix:~/.aws/config  
+Windows:C:\Users\USERNAME\.aws\config
 
 ##### AWS Profile Name
-Sets the AWS profile name to use. You can set this name in one of the following ways:
 
-+ Set the AWS_DEFAULT_PROFILE environment variable.
-+ Set --profile on the command line.
+以下の方法で利用するAWSプロファイルの値を設定する
 
-If you don't set this name, the AWS CLI uses default. For more information, see Multiple Configuration Profiles.
++ 環境変数のAWS_DEFAULT_PROFILE
++ コマンドラインオプション--profile
+
+指定しない場合、AWS CLIはdefaultを使う
 
 ##### Output Style
-Sets the output style to use. You can set this style in one of the following ways:
 
-+ Set output in the configuration file.
-+ Set the AWS_DEFAULT_OUTPUT environment variable.
-+ Set --output on the command line.
+以下の方法で出力形式を指定できる
 
-If you don't set the output style, the AWS CLI assumes JSON output. For more information, see Configuring Command Output
++ 設定ファイルのoutput
++ 環境変数のAWS_DEFAULT_OUTPUT
++ コマンドラインオプション--output
 
-#### Configuration File Location
-The simplest way to use a configuration file with the AWS CLI is to name it config and place it in a folder named .aws in your home directory. On Windows, that would look like C:\Users\USERNAME\.aws\config. On Linux, OS X, or Unix, that is ~/.aws/config. The AWS CLI will automatically check this location for a configuration file.
+指定しない場合AWS CLIはJSON形式で出力する
 
-Alternatively, you can place your configuration file in another location and point the AWS CLI to it using an environment variable. Set the AWS_CONFIG_FILE environment variable to the desired location, and the AWS CLI loads that file instead.
+#### 設定ファイルの場所Configuration File Location
 
-#### AWS Credentials
-+ Option #1: In the configuration file, enter your access key ID, secret key, and optionally a session token.
+一番簡単な方法はホームディレクトリに.awsディレクトリを作る  
+AWS CLIは自動的に設定ファイルを探す
+
+Linux,OS X,Unix:~/.aws/config  
+Windows:C:\Users\USERNAME\.aws\config
+
+別の方法として環境変数AWS_CONFIG_FILEを使って設定ファイルの場所を変更できる
+
+#### AWS認証
++ Option #1: 設定ファイル内にアクセスキー、シークレットアクセスキー、セッショントークン（オプション）を入力する
 ```bash
 [default]
 aws_access_key_id=AKIAIOSFODNN7EXAMPLE
 aws_secret_access_key=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 aws_security_token=texample123324
 ```
-+ Option #2: Configure the environment variables AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY, and AWS_SECURITY_TOKEN if using temporary security credentials.
-+ Option #3: Use an EC2 instance role. For more information, see Granting Applications that Run on Amazon EC2 Instances Access to AWS Resources in Using IAM.
++ Option #2: 環境変数AWS_ACCESS_KEY_ID、AWS_SECRET_ACCESS_KEY、AWS_SECURITY_TOKEN（オプション）を設定する
++ Option #3: EC2インスタンスロールを使う
 
-#### Configuring the AWS Region
-+ Option #1: Configure the region setting in the configuration file:
+#### AWSリージョン設定
++ Option #1: 設定ファイルのregin
 ```bash
 [default]
 region = us-west-2
 ```
-+ Option #2: Specify the region in the AWS_DEFAULT_REGION environment variable.
-+ Option #3: Use the --region option with an AWS CLI command. The following example lists the Amazon SQS queues for the us-west-2 region.
++ Option #2: 環境変数のAWS_DEFAULT_REGIONに設定する
++ Option #3: コマンドラインオプション--region
 ```
 aws sqs list-queues --region us-west-2
 ```
 
-#### Configuring Command Output
-+ Option #1: Configure the default format in the configuration file:
+#### コマンド出力設定
++ Option #1: 設定ファイルのデフォルトoutput
 ```bash
 [default]
 output = text
 ```
-+ Option #2: Specify the format in the AWS_DEFAULT_OUTPUT environment variable.
-+ Option #3: Use the --output option with an AWS CLI command. The following example lists the Amazon EBS volumes in a table format.
++ Option #2: 環境変数のAWS_DEFAULT_OUTPUTに設定する
++ Option #3: コマンドラインオプション--output
 ```bash
 aws ec2 describe-volumes --output table
 ```
 
-#### Multiple Configuration Profiles
+#### 複数設定プロファイル
 ```bash
 [default]
 aws_access_key_id=AKIAIOSFODNN7EXAMPLE
@@ -385,9 +397,11 @@ aws_access_key_id=AKIAI44QH8DHBEXAMPLE
 aws_secret_access_key=je7MtGbClwBF/2Zp9Utk/h3yCo8nvbEXAMPLEKEY
 region=us-west-2
 ```
-When you invoke the AWS CLI, specify the profile that you want to use with the --profile command line parameter. If you do not specify a profile with --profile, the AWS CLI uses the profile specified by the environment variable AWS_DEFAULT_PROFILE. If this variable does not specify a profile, the AWS CLI uses the profile named default.
+AWS CLIを実行した時コマンドラインオプションの--profileでプロファイルを指定する  
+コマンドラインオプションで指定しない場合は環境変数AWS_DEFAULT_PROFILEで指定されているプロファイルを使う  
+環境変数が指定されていない場合は名前がdefaultのプロファイルを使う
 
-#### HTTP Proxy Settings
+#### HTTPプロクシ設定
 + Linux, OS X, or Unix
 ```bash
 export HTTP_PROXY=http://a.b.c.d:n
@@ -398,9 +412,9 @@ export HTTPS_PROXY=http://w.x.y.z:m
 set HTTP_PROXY=http://a.b.c.d:n
 set HTTPS_PROXY=http://w.x.y.z:m
 ```
-In these examples, http://a.b.c.d:n and http://w.x.y.z:m are the IP addresses and ports for the HTTP and HTTPS proxies.
+上記のhttp://a.b.c.d:n と http://w.x.y.z:m はプロクシ用IPアドレスとポート
 
-If you are using IAM roles, you should also specify the following environment variable, with the following IP address, so that the AWS CLI can access the Instance Meta Data Service (IMDS).
+もしIAMロールを使っているならばAWS CLIがインスタンスメタデータサービス(IMDS)にアクセスできるように以下の環境変数を設定しなければならない
 
 + Linux, OS X, or Unix
 ```bash
@@ -411,16 +425,16 @@ export NO_PROXY=169.254.169.254
 set NO_PROXY=169.254.169.254
 ```
 
-#### Command Completion
-To enable tab completion for bash, use the built-in command complete:
+#### 入力補完
+bash用
 ```bash
 $ complete -C aws_completer aws
 ```
-For tcsh,
+tcsh用
 ```tcsh
 $ complete aws 'p/*/`aws_completer`/'
 ```
-For zsh, source bin/aws_zsh_completer.sh.
+zsh用
 ```zsh
 $ source bin/aws_zsh_completer.sh
 ```
